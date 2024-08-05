@@ -73,3 +73,40 @@ for topping in toppings:
     print(f"- {topping}")
 
 print(f"Total price: ${total_price:}")
+
+# Excersize 9
+total_cost = 0
+num_family_members = int(input("Enter the number of family members: "))
+for i in range(num_family_members):
+    age = int(input(f"Enter the age of family member: "))
+    if age < 3:
+        total_cost += 0
+    elif age < 12:
+        total_cost += 10
+    else:
+        total_cost += 15
+print("Total cost: $" + str(total_cost))
+
+names = ["Tom", "Jerry", "Spike", "Sandy", "Benny"]
+for name in names:
+    age = int(input(f"What is the age of {name}? "))
+    if 16 <= age <= 21:
+        print(f"{name} is allowed to watch the movie.")
+        names.remove(name)
+        
+print("final list of permitted names:")   
+print(names)     
+
+# Excersize 10
+sandwich_orders = ["Tuna sandwich", "Pastrami sandwich", "Avocado sandwich", "Pastrami sandwich", "Egg sandwich", "Chicken sandwich", "Pastrami sandwich"]
+while "Pastrami sandwich" in sandwich_orders:
+    sandwich_orders.remove("Pastrami sandwich")
+
+finished_sandwiches = []
+while sandwich_orders:
+    sandwich = sandwich_orders.pop(0)
+    finished_sandwiches.append(sandwich)
+
+for sandwich in finished_sandwiches:
+    print(f"I made your {sandwich}")
+    
