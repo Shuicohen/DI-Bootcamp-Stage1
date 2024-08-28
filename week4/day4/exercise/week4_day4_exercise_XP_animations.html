@@ -1,0 +1,97 @@
+<!--Exercise 1:-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Exercise</title>
+    <style>
+        p {
+            background: yellow;
+            color: red;
+            padding: 5px;
+            margin: 5px 0;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="container"></div>
+        <button id="clear">Clear Interval</button>
+
+        <script>
+            // Part 1: Alet "Hello World" every 2 seconds
+            setTimeout(function() {
+                alert("Hello World");
+            }, 2000);
+
+            // Part 2: Add a paragraph every 2 seconds until there are 5
+            let count = 0;
+
+            const IntervalId = setInterval(function() {
+                const container = document.getElementById("container");
+                const newParagraph = document.createElement("p");
+                newParagraph.textContent = "Hello World";
+                container.appendChild(newParagraph);
+                count++;
+
+                // Stop the interval when 5 paragraphs are added
+                if (count === 5) {
+                    clearInterval(IntervalId);
+                }
+            }, 2000);
+
+            // Clear interval when button is clicked
+            document.getElementById("clear").addEventListener("click", function() {
+                clearInterval(IntervalId);
+            })
+        </script>
+    </body>
+    </html>
+
+
+<!--Exercise 2:-->
+
+<!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+        #container {
+          width: 400px;
+          height: 400px;
+          position: relative;
+          background: yellow;
+        }
+        #animate {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          background-color: red;
+        }
+        </style>
+    </head>
+    <body>
+        <p><button onclick="myMove()">Click Me</button></p>
+        <div id="container">
+          <div id="animate"></div>
+        </div>
+
+        <script>
+            function myMove() {
+                const box = document.getElementById("animate");
+                const container = document.getElementById("container");
+                let position = 0;
+                const intervalId = setInterval(frame, 1);
+
+                function frame() {
+                    if (position >= (container.clientWidth - box.clientWidth)) {
+                        clearInterval(intervalId); // Stop the interval when the box reaches the end
+                    } else {
+                        position++;
+                        box.style.left = position + "px"; // Move the box 1px to the right
+                    }
+                }
+            }
+        </script>
+    </body>
+    </html>
