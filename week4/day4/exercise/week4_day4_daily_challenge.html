@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>Challenge: Mad Libs</title>
+ </head>
+ <body>
+
+    <h1>Mad Libs</h1>
+
+    <form id="libform">
+        <label for="noun">Noun:</label>
+        <input type="text" id="noun"><br>
+
+        <label for="adjective">Adjective:</label>
+        <input type="text" id="adjective"><br>
+        
+        <label for="person">Someone's Name:</label>
+        <input type="text" id="person"><br>
+        
+        <label for="verb">Verb:</label>
+        <input type="text" id="verb"><br>
+        
+        <label for="place">A place:</label>
+        <input type="text" id="place"><br>
+        
+        <button id="lib-button">Lib it!</button>
+    </form>
+
+    <p>Generated story: 
+        <span id="story"></span>
+    </p>
+
+    <button id="shuffle-button" style="display: none;">Shuffle Story</button>
+
+    <script>
+        document.getElementById("libform").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const noun = document.getElementById("noun").value;
+            const adjective = document.getElementById("adjective").value;
+            const person = document.getElementById("person").value
+            const verb = document.getElementById("verb").value
+            const place = document.getElementById("place").value
+
+            // Ensure all fields are filled out
+            if (noun && adjective && person && verb && place) {
+                const stories = [
+                    `${person} went to the ${place} to ${verb} with a ${adjective} ${noun}.`,
+                    `In the ${place}, ${person} found a ${adjective} ${noun} and decided to ${verb} with it.`,
+                    `${noun} is the most ${adjective} thing ${person} ever saw in the ${place}. ${person} couldn't help but ${verb}.`
+                ];
+
+                const randomStory = stories[Math.floor(Math.random() * stories.length)];
+                document.getElementById("story").textContent = randomStory;
+
+                // Show the shuffle button
+                document.getElementById("shuffle-button").style.display = "inline-block";
+            } else {
+                alert("Please fill out all fields.");
+            }
+        });
+           
+        document.getElementById("shuffle-button").addEventListener("click", function() {
+            const noun = document.getElementById("noun").value;
+            const adjective = document.getElementById("adjective").value;
+            const person = document.getElementById("person").value
+            const verb = document.getElementById("verb").value
+            const place = document.getElementById("place").value
+
+            const stories = [
+                `${person} went to the ${place} to ${verb} with a ${adjective} ${noun}.`,
+                `In the ${place}, ${person} found a ${adjective} ${noun} and decided to ${verb} with it.`,
+                `${noun} is the most ${adjective} thing ${person} ever saw in the ${place}. ${person} couldn't help but ${verb}.`
+            ];
+            
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            document.getElementById("story").textContent = randomStory;
+        });
+    </script>
+
+ </body>
+</html>
