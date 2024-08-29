@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e67c6e;
+            margin: 0;
+        }
+        .container {
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .listTasks {
+            display: flex;
+            flex-direction: column;
+            
+        }
+        .task {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 0px;
+        }
+        .task input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        .task .remove {
+            cursor: pointer;
+            color: #ff0000;
+            font-size: 18px;
+        }
+        .task.done label {
+            text-decoration: line-through;
+            color: red;
+        }
+        .clear-btn {
+            margin-top: 20px;
+            background-color: #bee9dc;
+            border: none;
+            color: rgb(155, 17, 17);
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .clear-btn:hover {
+            background-color: #68c7aa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>To Do List</h1>
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Enter your task" required>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="listTasks"></div>
+        <button class="clear-btn" id="clear-btn">Clear All</button>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let taskId = 0;
+            const tasks = [];
+            const form = document.getElementById('task-form');
+            const taskInput = document.getElementById('task-input');
+            const listTasks = document.querySelector('.listTasks');
+            const clearBtn = document.getElementById('clear-btn');
+
+            function addTask() {
+                const taskText = taskInput.value.trim();
+
+                if (taskText) {
+                    const newTask = {
+                        task_id: taskId++,
+                        text: taskText,
+                        done: false
+                    };
+
+                    tasks.push(newTask);
+
+                    // Create task element
+                    const taskElement = document.createElement('div');
+                    taskElement.classList.add('task');
+                    taskElement.setAttribute('data-task-id', newTask.task_id);
+
+                    // Create checkbox
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = newTask.done;
+
+                    // Create label
+                    const label = document.createElement('label');
+                    label.textContent = taskText;
+
+                    // Create remove button
+                    const removeButton = document.createElement('i');
+                    removeButton.classList.add('fas', 'fa-times', 'remove');
+
+                    // Append elements
+                    taskElement.appendChild(removeButton);
+                    taskElement.appendChild(checkbox);
+                    taskElement.appendChild(label);
+
+                    // Add task to the DOM
+                    listTasks.appendChild(taskElement);
+
+                    // Clear the input
+                    taskInput.value = '';
+                }
+            }
+
+            function doneTask(event) {
+                if (event.target.type === 'checkbox') {
+                    const taskElement = event.target.parentElement;
+                    const taskId = parseInt(taskElement.getAttribute('data-task-id'));
+
+                    // Find the task in the array and update its done property
+                    const task = tasks.find(t => t.task_id === taskId);
+                    if (task) {
+                        task.done = event.target.checked;
+                        taskElement.classList.toggle('done', task.done);
+                    }
+                }
+            }
+
+            function deleteTask(event) {
+                if (event.target.classList.contains('remove')) {
+                    const taskElement = event.target.parentElement;
+                    const taskId = parseInt(taskElement.getAttribute('data-task-id'));
+
+                    // Remove from the tasks array
+                    const index = tasks.findIndex(t => t.task_id === taskId);
+                    if (index !== -1) {
+                        tasks.splice(index, 1);
+                    }
+
+                    // Remove from the DOM
+                    listTasks.removeChild(taskElement);
+                }
+            }
+
+            function clearTasks() {
+                tasks.length = 0; // Clear the array
+                listTasks.innerHTML = ''; // Clear the DOM
+            }
+
+            // Add task on form submit
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                addTask();
+            });
+
+            // Handle task completion and removal
+            listTasks.addEventListener('change', doneTask);
+            listTasks.addEventListener('click', deleteTask);
+
+            // Clear all tasks on button click
+            clearBtn.addEventListener('click', clearTasks);
+        });
+    </script>
+</body>
+</html>
