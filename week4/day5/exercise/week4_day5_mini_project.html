@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coloring Squares</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #game-container {
+            display: flex;
+            border: 2px solid #000;
+            padding: 10px;
+            background-color: #6e6969;
+        }
+
+        #controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+            border: 2px solid #000;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        #clear-button, #undo-button {
+            margin-bottom: 10px;
+            padding: 10px;
+            cursor: pointer;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        #color-palette {
+            display: grid;
+            grid-template-columns: repeat(3, 40px);
+            grid-template-rows: repeat(3, 40px);
+            gap: 5px;
+            margin-bottom: 10px;
+        }
+
+       
+
+        .color {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(60, 20px);
+            grid-template-rows: repeat(24, 20px);
+            gap: 1px;
+            border: 2px solid #000;
+            background-color: #3a3535;
+        }
+
+        .square {
+            width: 20px;
+            height: 20px;
+            background-color: #fff;
+            border: 1px solid #bbb5b5;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game-container">
+        <div id="controls">
+            <button id="clear-button">Clear Board</button>
+            <button id="undo-button">Undo</button>
+            <div id="color-palette">
+                <!-- 21 Colors in a 7x3 grid -->
+                <div class="color" style="background-color: red;"></div>
+                <div class="color" style="background-color: green;"></div>
+                <div class="color" style="background-color: blue;"></div>
+                <div class="color" style="background-color: yellow;"></div>
+                <div class="color" style="background-color: orange;"></div>
+                <div class="color" style="background-color: purple;"></div>
+                <div class="color" style="background-color: pink;"></div>
+                <div class="color" style="background-color: brown;"></div>
+                <div class="color" style="background-color: black;"></div>
+                <div class="color" style="background-color: white; border: 1px solid black;"></div>
+                <div class="color" style="background-color: cyan;"></div>
+                <div class="color" style="background-color: magenta;"></div>
+                <div class="color" style="background-color: lime;"></div>
+                <div class="color" style="background-color: navy;"></div>
+                <div class="color" style="background-color: teal;"></div>
+                <div class="color" style="background-color: olive;"></div>
+                <div class="color" style="background-color: maroon;"></div>
+                <div class="color" style="background-color: gray;"></div>
+                <div class="color" style="background-color: silver;"></div>
+                <div class="color" style="background-color: gold;"></div>
+                <div class="color" style="background-color: beige;"></div>
+            </div>
+        </div>
+        <div id="grid-container">
+            <!-- Grid of squares will go here -->
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const gridContainer = document.getElementById('grid-container');
+        const colorPalette = document.getElementById('color-palette');
+        const clearButton = document.getElementById('clear-button');
+        const undoButton = document.getElementById('undo-button');
+        let currentColor = 'black';
+        let isDrawing = false;
+        let actionHistory = []; // Stack to keep track of actions
+        let clearTimeoutId = null; // To track the clear timeout
+        let countdownIntervalId = null; // To track the countdown interval
+
+        // Create the grid
+        for (let i = 0; i < 1440; i++) { // 60 columns * 24 rows = 1440 squares
+            const square = document.createElement('div');
+            square.classList.add('square');
+            gridContainer.appendChild(square);
+        }
+
+        // Select a color
+        colorPalette.addEventListener('click', (e) => {
+            if (e.target.classList.contains('color')) {
+                selectedColor = e.target.style.backgroundColor;
+            }
+        });
+
+        // Handle drawing
+        gridContainer.addEventListener('mousedown', () => {
+            isDrawing = true;
+        });
+
+        gridContainer.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        gridContainer.addEventListener('mouseover', (e) => {
+            if (isDrawing && e.target.classList.contains('square')) {
+                // Store the previous color before changing it
+                const previousColor = e.target.style.backgroundColor;
+                actionHistory.push({element: e.target, previousColor: previousColor});
+
+                // Change the color of the square
+                e.target.style.backgroundColor = selectedColor;
+            }
+        });
+
+        // Clear the board
+        clearButton.addEventListener('click', () => {
+            const squares = document.querySelectorAll('.square');
+
+            // Store the current state of the board before clearing
+            const boardState = Array.from(squares).map(square => ({
+                element: square, 
+                previousColor: square.style.backgroundColor
+            }));
+
+            // Add the state to the action history
+            actionHistory.push({ type: 'clear', boardState});
+
+            // Clear the board
+            squares.forEach(square => {
+                square.style.backgroundColor = '#fff';
+            });
+
+            // Start the countdown for undo
+            let countdown = 5; // 5 seconds countdown
+            undoButton.textContent = `Undo (${countdown})`;
+
+            countdownIntervalId = setInterval(() => {
+                countdown -= 1;
+                undoButton.textContent = `Undo (${countdown})`;
+                if (countdown <= 0) {
+                    clearInterval(countdownIntervalId);
+                    undoButton.textContent = 'Undo'; // Reset the button text
+                    actionHistory = actionHistory.filter(action => action.type !== 'clear');
+                }
+            }, 1000);
+
+            // Set a timeout to remove the clear action after 5 seconds
+            clearTimeoutId = setTimeout(() => {
+                clearTimeoutId = null;
+                clearInterval(countdownIntervalId);
+                undoButton.textContent = 'Undo'; // Reset the button text
+                actionHistory = actionHistory.filter(action => action.type !== 'clear');
+            }, 5000);
+        });
+
+        // Undo the last action
+        undoButton.addEventListener('click', () => {
+            if (clearTimeoutId) {
+                clearTimeout(clearTimeoutId); // Clear the timeout if clicked before 5 seconds
+                clearTimeoutId = null; // Reset the timeoutId
+                clearInterval(countdownIntervalId); // Clear the countdown interval
+                undoButton.textContent = 'Undo'; // Reset the button text
+            }
+
+            if (actionHistory.length > 0) {
+                const lastAction = actionHistory.pop(); // Get the last action
+
+                if (lastAction.type === 'clear') {
+                    // If the last action was a clear action, restore the board state
+                    lastAction.boardState.forEach(action => {
+                        action.element.style.backgroundColor = action.previousColor;
+                    });
+                } else {
+                    // Otherwise, restore the last action
+                    lastAction.element.style.backgroundColor = lastAction.previousColor;
+                }
+            }
+        });
+                    
+    });
+</script>
+</body>
+</html>
