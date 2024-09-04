@@ -1,0 +1,92 @@
+<!-- Exercise 1:-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Send a Message</title>
+        </head>
+    <body>
+        <h3>Exercise 1</h3>
+        <form method="get" action="week5_day4_exercise.html">
+            <div>
+                <label for="name">Name:</label><br>
+                <input name="name" placeholder="name" />
+            </div>
+            <br>
+            <div>
+                <label for="comments">Comments:</label><br>
+                <textarea name="comments" placeholder="comments..." cols="30" rows="10"></textarea>
+            </div>
+            <br>
+            <input type="submit" value="Send" />
+        </form>
+    </body>
+</html>
+<!-- When you submit the form, the browser appends the form data to the URL in the format ?name=YOUR_NAME&comments=YOUR_COMMENTS -->
+
+
+<!-- Exercise 2:-->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <title>Send a Message</title>
+        </head>
+    <body>
+        <h3>Exercise 2</h3>
+        <form method="post" action="week5_day4_exercise.html">
+            <div>
+                <label for="name">Name:</label><br>
+                <input name="name" placeholder="name" />
+            </div>
+            <br>
+            <div>
+                <label for="comments">Comments:</label><br>
+                <textarea name="comments" placeholder="comments..." cols="30" rows="10"></textarea>
+            </div>
+            <br>
+            <input type="submit" value="Send" />
+        </form>
+    </body>
+</html>
+<!-- Network Tab: The data will not appear in the URL as it does with the GET method. Instead, it will be sent in the body of the HTTP request.-->
+
+
+<!-- Exercise 3:-->
+<script>
+const marioGame = {
+    detail: "An amazing game!",
+    characters: {
+      mario: {
+        description: "Small and jumpy. Likes princesses.",
+        height: 10,
+        weight: 3,
+        speed: 12,
+      },
+      bowser: {
+        description: "Big and green, Hates princesses.",
+        height: 16,
+        weight: 6,
+        speed: 4,
+      },
+      princessPeach: {
+        description: "Beautiful princess.",
+        height: 12,
+        weight: 2,
+        speed: 2,
+      }
+    }
+  };
+  
+  // Convert to a JSON object
+  const marioGameJSON = JSON.stringify(marioGame);
+  
+  // Pretty print the JSON object
+  const prettyMarioGameJSON = JSON.stringify(marioGame, null, 2);
+  
+  console.log(prettyMarioGameJSON);
+</script>
