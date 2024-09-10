@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="week6_day3_daily_challenge.css">
+    <script src="week6_day3_daily_challenge.js" defer async></script>
+</head>
+<body>
+    <div class="converter">
+        <h1>Currency Converter</h1>
+        <!-- Amount Input -->
+        <div class="input-container">
+            <input type="number" id="amount" placeholder="Amount" >
+        </div>
+        <!-- Currency Selectors with Switch Button -->
+        <div class="select-container">
+            <div>
+                <label for="fromCurrency">From:</label>
+                <select id="fromCurrency"></select>
+            </div><br>
+            <!-- Switch Button -->
+            <button id="switchBtn">⇆</button>
+
+            <div><br>
+                <label for="toCurrency">To:</label>
+                <select id="toCurrency"></select>
+            </div>
+        </div>
+        <!-- Convert Button -->
+        <button id="convertBtn">Convert</button>
+        <!-- Result Display -->
+        <div class="result">
+            <h2 id="resultText"></h2>
+        </div>
+    </div>
+</body>
+</html>
