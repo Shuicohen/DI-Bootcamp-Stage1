@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars Character Info</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="week6_day3_exercise.css">
+</head>
+<body>
+    <div id="app" class="star-wars-bg">
+        <div class="content">
+            <img src="image.png" alt="Star Wars Logo" class="logo">
+            <div class="character-container">
+                <div id="loadingMessage" class="loading hidden">
+                    <i class="fa fa-spinner fa-spin"></i> Loading character...
+                </div>
+                <div id="characterInfo" class="info-box hidden">
+                    <h2 id="name"></h2>
+                    <p><strong>Height:</strong> <span id="height"></span></p>
+                    <p><strong>Gender:</strong> <span id="gender"></span></p>
+                    <p><strong>Birth Year:</strong> <span id="birthYear"></span></p>
+                    <p><strong>Home World:</strong> <span id="homeworld"></span></p>
+                </div>
+                <div id="errorMessage" class="error hidden">Oh No! That person isn’t available.</div>
+            </div>
+            <button id="getCharacterButton" class="btn">Find Someone</button>
+        </div>
+    </div>
+    <script src="week6_day3_exercise.js"></script>
+</body>
+</html>

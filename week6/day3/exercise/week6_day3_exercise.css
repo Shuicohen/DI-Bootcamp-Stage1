@@ -1,0 +1,75 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('image.webp') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+}
+
+.star-wars-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.content {
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid yellow;
+}
+
+.logo {
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+.character-container {
+    margin: 20px 0;
+    padding: 15px;
+}
+
+.info-box {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Button styling */
+.btn {
+    background-color: yellow;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: orange;
+}
