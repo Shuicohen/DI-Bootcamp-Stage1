@@ -1,0 +1,68 @@
+/* Basic container styling */
+.calculator-container {
+  width: 350px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #f0f0f5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Heading */
+h1 {
+  font-family: 'Arial', sans-serif;
+  font-size: 24px;
+  color: #333;
+}
+
+/* Styling for the input section */
+.input-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.input-section input {
+  width: 45%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Styling for the select dropdown */
+.select-section {
+  margin: 20px 0;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Button styling */
+.calculate-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+.calculate-btn:hover {
+  background-color: #218838;
+}
+
+/* Result styling */
+h2 {
+  color: #0056b3;
+  font-size: 22px;
+  margin-top: 20px;
+}
