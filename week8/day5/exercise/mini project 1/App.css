@@ -1,0 +1,29 @@
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #282c34;
+  color: white;
+  font-family: Arial, sans-serif
+}
+
+.quote-box {
+  background: white;
+  color: black;
+  padding: 2rem;
+  margin: 5rem auto;
+  width: 50%;
+  border-radius: 10px;
+}
+
+button {
+  background: #61dafb;
+  border: none;
+  padding: 1rem;
+  color: black;
+  border-radius: 5px;
+  cursor: pointer;
+}
